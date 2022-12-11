@@ -3,6 +3,7 @@ package mondo.conv.tra.login.entity;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import mondo.conv.tra.login.enumuser.Role;
 
 @Getter
@@ -26,13 +28,12 @@ import mondo.conv.tra.login.enumuser.Role;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity(name = "user")
+@ToString
 public class AppUser implements UserDetails {
 
 	@Id
-	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String username;
 	private String password;
 	@Enumerated(EnumType.STRING)
@@ -40,16 +41,6 @@ public class AppUser implements UserDetails {
 	private String email;
 	private boolean locked;
 	private boolean enable;
-
-	public AppUser(String username, String password, Role appUserRole, String email, boolean locked, boolean enable) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.email = email;
-		this.locked = locked;
-		this.enable = enable;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -91,6 +82,14 @@ public class AppUser implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return this.enable;
+	}
+
+	public AppUser(String username, String password, Role role, String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.email = email;
 	}
 
 }
