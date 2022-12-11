@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "mondo.conv.tra")
-@EntityScan(basePackages = "mondo.conv.tra.login.entity")
-@EnableJpaRepositories("mondo.conv.tra.login.repository")
+@EntityScan(basePackages = {"mondo.conv.tra.login.entity", "mondo.conv.tra.registration.token.entity"})
+@EnableJpaRepositories(basePackages =  { "mondo.conv.tra.login.repository", "mondo.conv.tra.registration.token.repository"})
 public class TlLoginApplication {
 
 	public static void main(String[] args) {
