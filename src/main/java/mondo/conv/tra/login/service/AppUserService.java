@@ -23,7 +23,7 @@ public class AppUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return appUserRepository.finByEmail(email)
+		return appUserRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
 	}
 

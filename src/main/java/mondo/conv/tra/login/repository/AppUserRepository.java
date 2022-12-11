@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import mondo.conv.tra.login.bean.AppUserEntity;
+import mondo.conv.tra.login.entity.AppUser;
 
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository extends JpaRepository<AppUserEntity, Long> {
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
-	Optional<AppUserEntity> finByEmail(String email);
+	Optional<AppUser> findByEmail(String email);
 	
 }

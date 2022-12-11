@@ -1,4 +1,4 @@
-package mondo.conv.tra.login.bean;
+package mondo.conv.tra.login.entity;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,14 +25,14 @@ import mondo.conv.tra.login.enumuser.Role;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@Entity
-public class AppUserEntity implements UserDetails {
+@Entity(name = "user")
+public class AppUser implements UserDetails {
 
 	@Id
 	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
 	private Long id;
-	
+
 	private String username;
 	private String password;
 	@Enumerated(EnumType.STRING)
@@ -41,8 +41,7 @@ public class AppUserEntity implements UserDetails {
 	private boolean locked;
 	private boolean enable;
 
-	public AppUserEntity(String username, String password, Role appUserRole, String email, boolean locked,
-			boolean enable) {
+	public AppUser(String username, String password, Role appUserRole, String email, boolean locked, boolean enable) {
 		super();
 		this.username = username;
 		this.password = password;
