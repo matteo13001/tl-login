@@ -84,12 +84,13 @@ public class AppUser implements UserDetails {
 		return this.enable;
 	}
 
-	public AppUser(String username, String password, Role role, String email) {
+	public AppUser(String username, String password, Role role, String email, boolean enable) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.role = role;
 		this.email = email;
+		this.enable = enable;
 	}
 
 }

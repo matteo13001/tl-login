@@ -1,5 +1,6 @@
 package mondo.conv.tra.login.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ import mondo.conv.tra.login.entity.AppUser;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
 	Optional<AppUser> findByEmail(String email);
+	
+	Optional<AppUser> getByEmail(String email);
 	
 }

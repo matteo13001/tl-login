@@ -1,6 +1,8 @@
 package mondo.conv.tra.login.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,20 +40,39 @@ public class AppUserService implements UserDetailsService {
 	public String signUpUser(AppUser appUser, String password) {
 
 		boolean userExist = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
-
-		if (userExist) {
-			throw new IllegalStateException("Email already taken");
+		boolean attivo = confirmationTokenService.idActive(appUser.getEmail());
+		if (userExist && attivo) {
+			throw new IllegalStateException("Email already taken and Token is valid, also");
 		}
 		String passwordEncode = bCryptPasswordEncoder.encode(password);
 		appUser.setPassword(passwordEncode);
+		
+		
+		//elimina tutti quelli con quella email che però non è stata eliminata
+		
+		
 		appUserRepository.save(appUser);
-
 		String token = UUID.randomUUID().toString();
 
 		ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(),
 				LocalDateTime.now().plusMinutes(15), appUser);
+		
+		System.out.println(confirmationToken.getConfirmed());
 
 		confirmationTokenService.saveConfirmationToken(confirmationToken);
 		return token;
+	}
+
+	public void enableAppUser(String email) {
+		
+		AppUser appUser = appUserRepository.getByEmail(email).orElse(null);
+		
+		if (appUser == null) {
+			throw new IllegalStateException("qualcosa è andato storto, contattare il supporto");
+		}
+		
+		appUser.setEnable(true);
+		appUserRepository.save(appUser);
+		
 	}
 }

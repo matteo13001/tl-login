@@ -25,7 +25,7 @@ public class ConfirmationToken {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String token;
 	private LocalDateTime createAt;
@@ -33,19 +33,16 @@ public class ConfirmationToken {
 	private LocalDateTime confirmed;
 
 	@ManyToOne
-	@JoinColumn(
-			nullable = false,
-			name = "id_User"
-			)
+	@JoinColumn(nullable = false, name = "id_User")
 	private AppUser appUser;
-	
-	public ConfirmationToken(String token, LocalDateTime createAt, LocalDateTime expiresAt,
-			AppUser appUser) {
+
+	public ConfirmationToken(String token, LocalDateTime createAt, LocalDateTime expiresAt, AppUser appUser) {
 		super();
 		this.token = token;
 		this.createAt = createAt;
 		this.expiresAt = expiresAt;
 		this.appUser = appUser;
+		this.confirmed = null;
 	}
 
 }

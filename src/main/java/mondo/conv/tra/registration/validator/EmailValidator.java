@@ -1,8 +1,7 @@
 package mondo.conv.tra.registration.validator;
 
 import java.util.function.Predicate;
-
-import javax.websocket.server.ServerEndpoint;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
@@ -10,10 +9,11 @@ import org.springframework.stereotype.Service;
 public class EmailValidator implements Predicate<String> {
 
 	@Override
-	public boolean test(String t) {
-		
-		return true;
+	public boolean test(String email) {
+
+		String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+		return Pattern.compile(regexPattern).matcher(email).matches();
 	}
 
-	
 }
